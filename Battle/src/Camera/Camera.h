@@ -1,5 +1,6 @@
 #pragma once
 #include<glm/glm.hpp>
+#include "Event/KeyEvent.h"
 namespace JF
 {
 	class Camera
@@ -9,7 +10,9 @@ namespace JF
 		~Camera() = default;
 		inline const glm::mat4& get_view_projection_matrix() const { return m_ViewProjectionMatrix; }
 		void set_camera_aspect(size_t width, size_t height);
-		glm::vec3& get_position() { return m_Position; }
+		void on_event(Event& e);
+	private:
+		void on_key_pressed(KeyPressedEvent& e);
 		void update_camera_matrix();
 	private:
 		glm::mat4 m_ProjectionMatrix;

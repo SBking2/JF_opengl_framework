@@ -144,6 +144,7 @@
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Renderer\Renderer.cpp" />
     <ClCompile Include="src\Scene\Scene.cpp" />
+    <ClCompile Include="src\Shader\Shader.cpp" />
     <ClCompile Include="src\Window\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -156,7 +157,11 @@
     <ClInclude Include="src\Renderer\Renderer.h" />
     <ClInclude Include="src\Scene\Scene.h" />
     <ClInclude Include="src\Event\Event.h" />
+    <ClInclude Include="src\Shader\Shader.h" />
     <ClInclude Include="src\Window\Window.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="assets\shader\normal_shader" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

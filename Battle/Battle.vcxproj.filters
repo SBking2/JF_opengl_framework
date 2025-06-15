@@ -33,6 +33,9 @@
     <ClCompile Include="src\Camera\Camera.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\Shader\Shader.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Scene\Scene.h">
@@ -65,5 +68,11 @@
     <ClInclude Include="src\Camera\Camera.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="src\Shader\Shader.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="assets\shader\normal_shader" />
   </ItemGroup>
 </Project>
