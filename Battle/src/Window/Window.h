@@ -11,7 +11,7 @@ namespace JF
 	{
 	public:
 		Window(const size_t& width, const size_t& height, const std::string& title);
-		~Window();
+		virtual ~Window();
 		void on_render();
 		void on_update();
 		void set_viewport(size_t width, size_t height);

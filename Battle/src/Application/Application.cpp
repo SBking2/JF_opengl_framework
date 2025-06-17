@@ -9,7 +9,7 @@ namespace JF
 		m_Height = 600;
 
 		glfw_init();
-		m_Window = std::make_shared<Window>(m_Width, m_Height, "My Window");
+		m_Window = std::make_shared<Window>(m_Width, m_Height, "JF Application");
 		glew_init();
 		m_Renderer = std::make_shared<Renderer>(m_Width, m_Height);
 

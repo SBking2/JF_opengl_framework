@@ -8,7 +8,7 @@ namespace JF
 	{
 	public:
 		Shader(const std::string& path);
-		~Shader();
+		virtual ~Shader();
 		void bind();
 		void unbind();
 	public:

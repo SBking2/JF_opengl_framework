@@ -7,7 +7,7 @@ namespace JF
 	{
 	public:
 		Camera(size_t width, size_t height);
-		~Camera() = default;
+		virtual ~Camera() = default;
 		inline const glm::mat4& get_view_projection_matrix() const { return m_ViewProjectionMatrix; }
 		void set_camera_aspect(size_t width, size_t height);
 		void on_event(Event& e);

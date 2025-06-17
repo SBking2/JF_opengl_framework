@@ -1,6 +1,6 @@
 #pragma once
 #include<memory>
-#include "Renderer/Renderer.h"
+#include "Render/Renderer/Renderer.h"
 #include "Window/Window.h"
 
 #include "Event/EventDispatcher.h"
@@ -15,7 +15,7 @@ namespace JF
 	{
 	public:
 		Application();
-		~Application() = default;
+		virtual ~Application() = default;
 		void on_render();
 		void on_update();
 		void on_event(Event& e);

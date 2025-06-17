@@ -6,7 +6,7 @@ class Scene
 {
 public:
 	Scene() = default;
-	~Scene() = default;
+	virtual ~Scene() = default;
 	void Init();
 private:
 };
