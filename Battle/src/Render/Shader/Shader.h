@@ -12,7 +12,8 @@ namespace JF
 		void bind();
 		void unbind();
 	public:
-		void set_unifrom_matrix4(const std::string& name, const glm::mat4& matrix);
+		void set_uniform_matrix4(const std::string& name, const glm::mat4& matrix);
+		void set_uniform_Int(const std::string& name, const int& value);
 	private:
 		void read_file(const std::string& path, std::string& vertexSrc, std::string& fragmentSrc);
 	private:

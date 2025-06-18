@@ -105,4 +105,9 @@
   <ItemGroup>
     <Text Include="assets\shader\normal_shader" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="assets\texture\te.jpg">
+      <Filter>资源文件</Filter>
+    </Image>
+  </ItemGroup>
 </Project>

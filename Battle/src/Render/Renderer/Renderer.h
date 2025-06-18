@@ -20,6 +20,7 @@ namespace JF
 		struct VertexData
 		{
 			glm::vec3 position;
+			glm::vec2 uv;
 			glm::vec4 color;
 		};
 
@@ -49,9 +50,8 @@ namespace JF
 		void on_update();
 		void on_event(Event& e);
 		void set_camera_bound(size_t width, size_t height);
-	public:
-		void draw_quad(const glm::vec3& position, float rotation, int& count);		//ªÊ÷∆Quad
 	private:
+		void draw_quad(const glm::vec3& position, float rotation);		//ªÊ÷∆Quad
 		void start_batch();
 		void draw_command();
 	private:

@@ -173,6 +173,9 @@
   <ItemGroup>
     <Text Include="assets\shader\normal_shader" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="assets\texture\te.jpg" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

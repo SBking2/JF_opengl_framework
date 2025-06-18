@@ -92,10 +92,16 @@ namespace JF
 		glUseProgram(0);
 	}
 
-	void Shader::set_unifrom_matrix4(const std::string& name, const glm::mat4& matrix)
+	void Shader::set_uniform_matrix4(const std::string& name, const glm::mat4& matrix)
 	{
 		GLuint location = glGetUniformLocation(m_ShaderProgram, name.c_str());
 		glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matrix));
+	}
+
+	void Shader::set_uniform_Int(const std::string& name, const int& value)
+	{
+		GLuint location = glGetUniformLocation(m_ShaderProgram, name.c_str());
+		glUniform1i(location, value);
 	}
 
 	void Shader::read_file(const std::string& path, std::string& vertexSrc, std::string& fragmentSrc)
