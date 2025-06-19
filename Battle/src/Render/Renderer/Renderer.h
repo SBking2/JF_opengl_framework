@@ -11,6 +11,7 @@
 #include "Event/EventDispatcher.h"
 #include "Render/Shader/Shader.h"
 #include "Render/VertexArray/VertexArray.h"
+#include "Render/Texture/Texture.h"
 
 namespace JF
 {
@@ -20,6 +21,7 @@ namespace JF
 		struct VertexData
 		{
 			glm::vec3 position;
+			float texIndex;
 			glm::vec2 uv;
 			glm::vec4 color;
 		};
@@ -40,6 +42,12 @@ namespace JF
 			uint32_t* index_base;
 			uint32_t* index_ptr;
 
+			std::shared_ptr<Texture> texture1;
+			std::shared_ptr<Texture> texture2;
+			std::shared_ptr<Texture> texture3;
+			std::shared_ptr<Texture> texture4;
+			std::shared_ptr<Texture> texture5;
+
 			glm::vec4 quad_vertex[4];
 		};
 
@@ -51,7 +59,7 @@ namespace JF
 		void on_event(Event& e);
 		void set_camera_bound(size_t width, size_t height);
 	private:
-		void draw_quad(const glm::vec3& position, float rotation);		//ªÊ÷∆Quad
+		void draw_quad(const glm::vec3& position, float rotation, int texindex);		//ªÊ÷∆Quad
 		void start_batch();
 		void draw_command();
 	private:

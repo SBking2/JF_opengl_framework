@@ -104,6 +104,12 @@ namespace JF
 		glUniform1i(location, value);
 	}
 
+	void Shader::set_uniform_IntArray(const std::string& name, int* values, uint32_t count)
+	{
+		GLuint location = glGetUniformLocation(m_ShaderProgram, name.c_str());
+		glUniform1iv(location, count, values);
+	}
+
 	void Shader::read_file(const std::string& path, std::string& vertexSrc, std::string& fragmentSrc)
 	{
 		std::ifstream fileStream(path, std::ios::in);

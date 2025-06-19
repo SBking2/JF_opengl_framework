@@ -1,11 +1,9 @@
-#define STB_IMAGE_IMPLEMENTATION
 #include "Renderer.h"
 #include <iostream>
 #include <fstream>
 #include <vector>
 #include <cstring>
 #include <sstream>
-#include "stb/stb_image.h"
 #include<glm/gtc/matrix_transform.hpp>
 #include<glm/gtc/type_ptr.hpp>
 namespace JF
@@ -26,35 +24,36 @@ namespace JF
 		m_VertexBuffer->set_layout(
 			{
 				{ ShaderDataType::Float3 },
+				{ ShaderDataType::Float },
 				{ ShaderDataType::Float2 },
 				{ ShaderDataType::Float4 }
 			});
 		m_VertexArray->set_vertex_buffer(m_VertexBuffer.get());
 
-		stbi_set_flip_vertically_on_load(true);
+		m_RenderData.texture1 = std::make_shared<Texture>("assets/texture/xia.jpg");
+		m_RenderData.texture1->bind(0);
 
-		int img_width, img_height, channels;
-		unsigned char* data = stbi_load("assets/texture/te.jpg", &img_width, &img_height, &channels, 0);
-		if (!data) {
-			std::cerr << "Failed to load texture!" << std::endl;
-			assert(true);
+		m_RenderData.texture2 = std::make_shared<Texture>("assets/texture/te2.jpg");
+		m_RenderData.texture2->bind(1);
+
+		m_RenderData.texture3 = std::make_shared<Texture>("assets/texture/te.jpg");
+		m_RenderData.texture3->bind(2);
+
+		m_RenderData.texture4 = std::make_shared<Texture>("assets/texture/xiang.jpg");
+		m_RenderData.texture4->bind(3);
+
+		m_Shader->bind();
+
+		int sampler2D[32];
+		for (int i = 0; i < 32; i++)
+		{
+			sampler2D[i] = i;
 		}
 
-		GLuint texture;
-		glGenTextures(1, &texture);
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, texture);
+		m_Shader->set_uniform_IntArray("textureIDs", sampler2D, 32);	//修改Shader值，只有在绑定Shader之后才有用
 
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);     // X轴重复
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);     // Y轴重复
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR); // 缩小过滤
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR); // 放大过滤
-
-		GLenum format = (channels == 4) ? GL_RGBA : GL_RGB;
-		glTexImage2D(GL_TEXTURE_2D, 0, format, img_width, img_height, 0, format, GL_UNSIGNED_BYTE, data);
-		glGenerateMipmap(GL_TEXTURE_2D);
-
-		stbi_image_free(data);	//释放图片数据
+		/*m_RenderData.texture5 = std::make_shared<Texture>("assets/texture/bk.jpg");
+		m_RenderData.texture1->bind(4);*/
 	}
 
 	Renderer::~Renderer()
@@ -70,24 +69,23 @@ namespace JF
 	void Renderer::on_render()
 	{
 		static float y = 0.0f;
+		static float x = 0.0f;
 		static float rotation = 0.0f;
 
 		rotation += 0.1;
 		y = std::sin(rotation);
+		x = std::cos(rotation);
 
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);	//设置Clear时使用的颜色
 		glClear(GL_COLOR_BUFFER_BIT);	//Clear
-
-		// 绘制三角形
-		m_Shader->bind();
+		
 		m_Shader->set_uniform_matrix4("projection", m_Camera->get_view_projection_matrix());
-		m_Shader->set_uniform_Int("textureID", 0);
 
 		start_batch();
 
-		draw_quad(glm::vec3(0.0f), 0.0f);
-		draw_quad(glm::vec3(1.0f, y, 0.0f), rotation);
-		draw_quad(glm::vec3(-2.0f, -0.5f, 0.0f), 0.0f);
+		draw_quad(glm::vec3(0.0f), x, 0);
+		draw_quad(glm::vec3(x, y, 0.0f), rotation, 1);
+		draw_quad(glm::vec3(x, -0.5f, 0.0f), 0.0f, 2);
 
 		draw_command();
 	}
@@ -102,27 +100,31 @@ namespace JF
 		m_Camera->set_camera_aspect(width, height);
 	}
 
-	void Renderer::draw_quad(const glm::vec3& position, float rotation)
+	void Renderer::draw_quad(const glm::vec3& position, float rotation, int texindex)
 	{
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
 			* glm::rotate(glm::mat4(1.0f), rotation, glm::vec3(0, 0, 1));
 
 		m_RenderData.vertex_data_ptr->position = transform * m_RenderData.quad_vertex[0];
+		m_RenderData.vertex_data_ptr->texIndex = texindex;
 		m_RenderData.vertex_data_ptr->uv = glm::vec2(0.0f, 1.0f);
 		m_RenderData.vertex_data_ptr->color = glm::vec4(0.5f, 1.0f, 1.0f, 1.0f);
 		m_RenderData.vertex_data_ptr++;
 
 		m_RenderData.vertex_data_ptr->position = transform * m_RenderData.quad_vertex[1];
+		m_RenderData.vertex_data_ptr->texIndex = texindex;
 		m_RenderData.vertex_data_ptr->uv = glm::vec2(0.0f, 0.0f);
 		m_RenderData.vertex_data_ptr->color = glm::vec4(1.0f, 0.5f, 1.0f, 1.0f);
 		m_RenderData.vertex_data_ptr++;
 
 		m_RenderData.vertex_data_ptr->position = transform * m_RenderData.quad_vertex[2];
+		m_RenderData.vertex_data_ptr->texIndex = texindex;
 		m_RenderData.vertex_data_ptr->uv = glm::vec2(1.0f, 0.0f);
 		m_RenderData.vertex_data_ptr->color = glm::vec4(1.5f, 1.0f, 0.5f, 1.0f);
 		m_RenderData.vertex_data_ptr++;
 
 		m_RenderData.vertex_data_ptr->position = transform * m_RenderData.quad_vertex[3];
+		m_RenderData.vertex_data_ptr->texIndex = texindex;
 		m_RenderData.vertex_data_ptr->uv = glm::vec2(1.0f, 1.0f);
 		m_RenderData.vertex_data_ptr->color = glm::vec4(0.5f, 1.0f, 0.5f, 1.0f);
 		m_RenderData.vertex_data_ptr++;

@@ -1,26 +1,30 @@
 #version 330 core
 layout(location = 0) in vec3 aPos;
-layout(location = 1) in vec2 aUV;
-layout(location = 2) in vec4 aColor;
+layout(location = 1) in float aSlot;
+layout(location = 2) in vec2 aUV;
+layout(location = 3) in vec4 aColor;
 
 uniform mat4 projection;
 
 out vec4 vColor;
+out float vSlot;
 out vec2 vUV;
 
 void main() {
 	gl_Position = projection * vec4(aPos, 1.0);
 	vColor = aColor;
 	vUV = aUV;
+	vSlot = aSlot;
 }
 
 #version 330 core
 
-uniform sampler2D textureID;
+uniform sampler2D textureIDs[32];
+in float vSlot;
 in vec2 vUV;
 in vec4 vColor;
 out vec4 FragColor;
 
 void main() {
-	FragColor = texture(textureID, vUV) * vColor; // ³ÈÉ«
+	FragColor = texture(textureIDs[int(vSlot)], vUV) * vColor; // ³ÈÉ«
 }

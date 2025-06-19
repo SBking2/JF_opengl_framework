@@ -48,6 +48,9 @@
     <ClCompile Include="src\Render\IndexBuffer\IndexBuffer.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\Render\Texture\Texture.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Game\Scene\Scene.h">
@@ -101,6 +104,9 @@
     <ClInclude Include="src\Utils\Utils.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="src\Render\Texture\Texture.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="assets\shader\normal_shader" />
@@ -109,5 +115,17 @@
     <Image Include="assets\texture\te.jpg">
       <Filter>资源文件</Filter>
     </Image>
+    <Image Include="assets\texture\xiang.jpg">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="assets\texture\xia.jpg">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="assets\texture\bk.jpg">
+      <Filter>资源文件</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\texture\te2.jpg" />
   </ItemGroup>
 </Project>
